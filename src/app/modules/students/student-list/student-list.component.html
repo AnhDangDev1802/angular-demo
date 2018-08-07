@@ -1,0 +1,93 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="text-align: center">
+            <h1>STUDENT LIST</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button (click)="openModalCreate()" class="btn btn-success">Create</button>
+        </div>
+        <div class="col-md-12">
+            <table class="table table-stripped">
+                <thead>
+                <tr>
+                    <th>id</th>
+                    <th>display name</th>
+                    <th>age</th>
+                    <th>address</th>
+                    <th>gender</th>
+                    <!--<th>action</th>-->
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let student of students">
+                    <td>{{student.id}}</td>
+                    <td>{{student.displayName}}</td>
+                    <td>{{student.age}}</td>
+                    <td>{{student.address}}</td>
+                    <td>{{student.gender}}</td>
+                    <!--<td><a>Edit</a></td>-->
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="createModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Student Create</h4>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="studentForm">
+                    <div class="form-group">
+                        <label>Display name</label>
+                        <input type="text" class="form-control" name="displayName"
+                               [formControl]="studentForm.controls['displayName']"/>
+                        <label *ngIf="studentForm.controls['displayName'].hasError('required') && (studentForm.controls['displayName'].touched || studentForm.controls['displayName'].dirty)"
+                               class="text text-danger">
+                            Display name is required!
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-control" name="age"
+                               [formControl]="studentForm.controls['age']"/>
+                        <label *ngIf="(studentForm.controls['age'].hasError('min') || studentForm.controls['age'].hasError('max') || studentForm.controls['age'].hasError('required')) && (studentForm.controls['age'].touched || studentForm.controls['age'].dirty)"
+                               class="text text-danger">
+                            Age must from 15 to 20!
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control" name="address"
+                               [formControl]="studentForm.controls['address']"/>
+                        <label *ngIf="studentForm.controls['address'].hasError('required') && (studentForm.controls['address'].touched || studentForm.controls['address'].dirty)"
+                               class="text text-danger">
+                            Address is required!
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="gender" class="form-control" [formControl]="studentForm.controls['gender']">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <label *ngIf="studentForm.controls['gender'].hasError('required') && (studentForm.controls['gender'].touched || studentForm.controls['gender'].dirty)"
+                               class="text text-danger">
+                            Gender is required!
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button (click)="createStudent()" type="button" class="btn btn-success">Create</button>
+            </div>
+        </div>
+    </div>
+</div>
